@@ -6,6 +6,7 @@ import Event from './Event';
 import Timekeeper from 'react-timekeeper';
 import { toast } from 'react-toastify';
 import { DropTarget } from 'react-dnd';
+import EventTypes from '../models/EventTypes';
 
 const spec = {
   canDrop(props) {
@@ -42,8 +43,13 @@ export default DropTarget('DraggableEvent', spec, collect)(observer(class Day ex
     }
   }
 
-  _removeEvent(event) {
-    Store.removeEvent(this.currentDay, event);
+  _removeEvent(event, action) {
+    if (action === 'update') {
+      Store.removeEvent(this.currentDay, event);
+      toast.success('Настанот беше успешно избришан.')
+    }
+    this.setState({ modalOpened: false })
+    this.setState({ currentEvent: null })
   }
 
   _renderEvents() {
@@ -52,7 +58,7 @@ export default DropTarget('DraggableEvent', spec, collect)(observer(class Day ex
         return (
           <Event key={index}
             event={event}
-            onRemoveEvent={(event) => this._removeEvent(event)}
+            onRemoveEvent={(event) => this._removeEvent(event, this.state.modalState)}
             onOpenModal={(event) => this._openModal(event)}
           />
         )
@@ -100,7 +106,7 @@ export default DropTarget('DraggableEvent', spec, collect)(observer(class Day ex
       newEvent.endDate.hours(to.hour24);
       newEvent.endDate.minutes(to.minute);
     }
-    if (description) {
+    if (description !== undefined) {
       newEvent.description = description;
     }
 
@@ -134,14 +140,16 @@ export default DropTarget('DraggableEvent', spec, collect)(observer(class Day ex
 
   modalBorderColor(type) {
     switch (type) {
-      case 'outdoor':
+      case EventTypes.outdoor:
         return 'border-success';
-      case 'social':
+      case EventTypes.social:
         return 'border-warning';
-      case 'learning':
+      case EventTypes.learning:
         return 'border-info';
-      case 'general':
+      case EventTypes.general:
         return 'border-secondary'
+      default:
+        return 'border-primary'
     }
   }
 
@@ -190,7 +198,7 @@ export default DropTarget('DraggableEvent', spec, collect)(observer(class Day ex
               </div>
             </div>
             <div className="card-footer text-right">
-              <button className={'btn btn-danger'} style={{ marginRight: '15px' }} onClick={() => { this._removeEvent(this.state.originalEvent) }}>
+              <button className={'btn btn-danger'} style={{ marginRight: '15px' }} onClick={() => { this._removeEvent(this.state.originalEvent, this.state.modalState) }}>
                 {this.state.modalState === 'save' ? 'Откажи' : 'Избриши'}
               </button>
               <button className={'btn btn-primary'} onClick={() => { this._closeModal(this.state.modalState) }}>

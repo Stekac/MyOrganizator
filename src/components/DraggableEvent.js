@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
+import EventTypes from '../models/EventTypes';
 
 const spec = {
   beginDrag(props) {
@@ -20,14 +21,16 @@ function collect(connect, monitor) {
 class DraggableEvent extends Component {
   eventType(type) {
     switch (type) {
-      case 'outdoor':
+      case EventTypes.outdoor:
         return 'btn-success';
-      case 'social':
+      case EventTypes.social:
         return 'btn-warning';
-      case 'learning':
+      case EventTypes.learning:
         return 'btn-info';
-      case 'general':
+      case EventTypes.general:
         return 'btn-secondary'
+      default:
+        return 'btn-primary'
     }
   }
   render() {

@@ -5,11 +5,6 @@ import Main from './views/Main';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-import moment from 'moment';
-import _ from 'lodash';
-
-window.moment = moment;
-window._ = _;
 class App extends Component {
 
   render() {

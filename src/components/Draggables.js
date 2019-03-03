@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EventTypes from '../models/EventTypes';
 import DraggableEvent from './DraggableEvent';
 
 export default class Draggables extends Component {
@@ -33,10 +34,10 @@ export default class Draggables extends Component {
     return (
       <div ref={this.draggablesRef} className={'card border-primary'} style={{ marginTop: '15px', transition: '0.5s margin-top' }}>
         <div className={'card-body'} style={styles.draggablesBody}>
-          <DraggableEvent type="outdoor" />
-          <DraggableEvent type="social" />
-          <DraggableEvent type="learning" />
-          <DraggableEvent type="general" />
+          <DraggableEvent type={EventTypes.outdoor} />
+          <DraggableEvent type={EventTypes.social}/>
+          <DraggableEvent type={EventTypes.learning} />
+          <DraggableEvent type={EventTypes.general} />
         </div>
       </div>
     )

@@ -1,15 +1,18 @@
 import React from 'react';
+import EventTypes from '../models/EventTypes';
 
 const _calculateBorder = (type) => {
   switch (type) {
-    case 'outdoor':
+    case EventTypes.outdoor:
       return 'bg-success text-white'
-    case 'social':
+    case EventTypes.social:
       return 'bg-warning text-dark'
-    case 'learning':
+    case EventTypes.learning:
       return 'bg-info text-white';
-    case 'general':
+    case EventTypes.general:
       return 'bg-secondary text-white'
+    default:
+      return 'bg-primary text-white'
   }
 }
 

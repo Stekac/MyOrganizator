@@ -1,9 +1,11 @@
 import { observable, computed, action, decorate } from 'mobx';
 import { get, set } from 'lodash';
 import Event from '../models/Event';
+import EventTypes from '../models/EventTypes';
 import moment from 'moment';
 import mk from 'moment/locale/mk'
 moment.updateLocale('mk', mk);
+
 
 const exampleEvent = new Event(
   new moment().set({
@@ -20,7 +22,7 @@ const exampleEvent = new Event(
     hour: 2,
     minutes: 0
   }),
-  'outdoor',
+  EventTypes.outdoor,
   'Ова е пример Настан'
 )
 
@@ -39,7 +41,7 @@ const exampleEvent2 = new Event(
     hour: 3,
     minutes: 0
   }),
-  'social',
+  EventTypes.social,
   'Ова е пример Настан2'
 )
 
@@ -122,7 +124,7 @@ class Store {
           let isOverlapping = this._isEventOverlapping(eventsForDay, event);
 
           if (isOverlapping) {
-            reject('Има преклопување на настани')
+            reject('Има преклопување на настани.')
           } else {
             this.eventData[year][month][date].push(event.clone())
             this._sortEvents(date);
