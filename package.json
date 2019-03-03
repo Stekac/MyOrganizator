@@ -1,5 +1,6 @@
 {
-  "name": "diplomska",
+  "name": "moj-organizator",
+  "homepage": "https://stekac.github.io/MyOrganizator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,6 +20,8 @@
     "react-toastify": "^4.5.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
